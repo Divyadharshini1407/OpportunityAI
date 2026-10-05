@@ -1,0 +1,26 @@
+name: Daily OpportunityAI Workflow
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: "30 3 * * *"
+
+jobs:
+  run:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+
+      - name: Run automation placeholder
+        run: |
+          echo "OpportunityAI automated workflow started"
+          echo "AI collection pipeline will be connected in the next step."

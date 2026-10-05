@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>OpportunityAI Dashboard</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='style.css') }}">
+</head>
+
+<body>
+
+<header>
+
+    <div>
+        <h1>OpportunityAI</h1>
+
+        <p>AI-powered college opportunity tracker</p>
+    </div>
+
+    <span class="status">
+        ● Automation Ready
+    </span>
+
+</header>
+
+
+<main>
+
+    <!-- STATISTICS -->
+
+    <section class="stats">
+
+        <div>
+            <span>Total Opportunities</span>
+            <strong>{{ stats.total }}</strong>
+        </div>
+
+        <div>
+            <span>Internships</span>
+            <strong>{{ stats.internships }}</strong>
+        </div>
+
+        <div>
+            <span>Hackathons</span>
+            <strong>{{ stats.hackathons }}</strong>
+        </div>
+
+        <div>
+            <span>High Priority</span>
+            <strong>{{ stats.high }}</strong>
+        </div>
+
+    </section>
+
+
+    <!-- AI MATCHER -->
+
+    <section class="ai-match">
+
+        <h2>🤖 AI Opportunity Matcher</h2>
+
+        <p>
+            Enter your skills and find suitable opportunities.
+        </p>
+
+        <form action="/ai-match" method="POST">
+
+            <input
+                name="skills"
+                placeholder="Example: Python, SQL, Excel"
+                value="{{ student_skills }}"
+                required
+            >
+
+            <button type="submit">
+                Find AI Matches
+            </button>
+
+        </form>
+
+
+        {% if ai_results %}
+
+            <h3>✨ Recommended Opportunities</h3>
+
+            {% for match, item in ai_results %}
+
+                <div class="ai-result">
+
+                    <b>{{ item.title }}</b>
+
+                    — {{ match }} skill(s) matched
+
+                </div>
+
+            {% endfor %}
+
+        {% endif %}
+
+    </section>
+
+
+    <!-- FILTERS -->
+
+    <section class="toolbar">
+
+        <h2>Latest Opportunities</h2>
+
+        <div class="filters">
+
+            <a href="/">
+                All
+            </a>
+
+            <a href="/?category=Internship">
+                Internships
+            </a>
+
+            <a href="/?category=Hackathon">
+                Hackathons
+            </a>
+
+            <a href="/?category=Scholarship">
+                Scholarships
+            </a>
+
+            <a href="/?category=Workshop">
+                Workshops
+            </a>
+
+        </div>
+
+    </section>
+
+
+    <!-- OPPORTUNITY CARDS -->
+
+    <section class="cards">
+
+        {% for item in opportunities %}
+
+            <article class="card">
+
+                <div class="card-top">
+
+                    <span class="category">
+                        {{ item.category }}
+                    </span>
+
+                    <span class="priority {{ item.priority|lower }}">
+                        {{ item.priority }}
+                    </span>
+
+                </div>
+
+
+                <h3>
+                    {{ item.title }}
+                </h3>
+
+
+                <p class="org">
+                    {{ item.organization }}
+                </p>
+
+
+                <p>
+                    {{ item.summary }}
+                </p>
+
+
+                <div class="details">
+
+                    <span>
+                        📅 {{ item.deadline }}
+                    </span>
+
+                    <span>
+                        🛠 {{ item.skills }}
+                    </span>
+
+                </div>
+
+
+                <p>
+                    <b>Eligibility:</b>
+                    {{ item.eligibility }}
+                </p>
+
+
+                <a
+                    class="button"
+                    href="{{ item.link }}"
+                    target="_blank"
+                >
+                    View Opportunity →
+                </a>
+
+            </article>
+
+        {% endfor %}
+
+    </section>
+
+
+    <!-- ADD OPPORTUNITY -->
+
+    <section class="add-section">
+
+        <h2>Add Opportunity</h2>
+
+        <form action="/add" method="POST">
+
+            <input
+                name="title"
+                placeholder="Opportunity title"
+                required
+            >
+
+            <input
+                name="organization"
+                placeholder="Organization"
+                required
+            >
+
+            <select name="category">
+
+                <option>Internship</option>
+                <option>Hackathon</option>
+                <option>Scholarship</option>
+                <option>Workshop</option>
+                <option>Competition</option>
+
+            </select>
+
+
+            <input
+                type="date"
+                name="deadline"
+            >
+
+
+            <input
+                name="skills"
+                placeholder="Skills"
+            >
+
+
+            <input
+                name="eligibility"
+                placeholder="Eligibility"
+            >
+
+
+            <select name="priority">
+
+                <option>High</option>
+                <option selected>Medium</option>
+                <option>Low</option>
+
+            </select>
+
+
+            <input
+                name="link"
+                placeholder="Opportunity link"
+            >
+
+
+            <textarea
+                name="summary"
+                placeholder="Short summary"
+            ></textarea>
+
+
+            <button type="submit">
+                Add Opportunity
+            </button>
+
+        </form>
+
+    </section>
+
+</main>
+
+</body>
+</html>-
