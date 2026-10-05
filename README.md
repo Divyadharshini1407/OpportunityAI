@@ -65,7 +65,8 @@ http://127.0.0.1:5000
 
 ## Team Members
 
-- Gayathri Esakki
+- Divyadharshini Esakki-125A3025
+- Rishita Gowda-125A3032
 
 ## Screenshots
 
